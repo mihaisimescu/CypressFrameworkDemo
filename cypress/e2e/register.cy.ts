@@ -1,5 +1,14 @@
-describe('template spec', () => {
-  it('passes', () => {
-    cy.visit('register.htm')
+before('', () => {
+})
+
+beforeEach('', () => {
+  cy.visit('register.htm')
+})
+
+describe('Register Tests', () => {
+  it('Check register functionality', () => {
+    
+    
   })
 })
+
