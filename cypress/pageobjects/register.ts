@@ -1,18 +1,18 @@
 export class Register {
 
     //Register fields
-    firstName = '#firstName'
-    lastName = '#lastName'
-    address = '#address'
-    city = '#city'
-    state = '#state'
-    zipCode = '#zipCode'
-    phone = '#phone'
-    ssn = '#ssn'
-    username = '#username'
-    password = '#password'
-    confirmPassword = '#confirmPassword'
-    submitRegistration = '#submitRegistration'
+    firstName = '#customer\.firstName'
+    lastName = '#customer\.lastName'
+    address = '#customer\.address\.street'
+    city = '#customer\.address\.city'
+    state = '#customer\.address\.state'
+    zipCode = '#customer\.address\.zipCode'
+    phone = '#customer\.phoneNumber'
+    ssn = '#customer\.ssn'
+    username = '#customer\.username'
+    password = '#customer\.password'
+    confirmPassword = '#repeatedPassword'
+    submitRegistration = '[colspan="2"] > .button'
 
 
     
