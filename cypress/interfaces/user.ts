@@ -9,6 +9,7 @@ export interface User{
     phoneNumber: string,
     socialSecurityNumber: string,
     username: string,
+    randomUsername: string,
     password: string
 
 }

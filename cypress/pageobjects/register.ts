@@ -14,8 +14,7 @@ export class Register {
     password = '#customer\\.password'
     confirmPassword = '#repeatedPassword'
     submitRegistration = '[colspan="2"] > .button' //input[value='Register']
-
-    //Register success check
+     //Register success check
     registerSuccessfull = "#rightPanel > p"
 
 
@@ -65,7 +64,6 @@ export class Register {
         return cy.get(this.confirmPassword)
     }
   
-
     submitRegistrationForm() {
         cy.get(this.submitRegistration).click()
         return this
@@ -79,8 +77,5 @@ export class Register {
     getWelcomeMsg(){
         return cy.get(this.registerSuccessfull)
     }
-
-
-
 
 }

@@ -1,7 +1,10 @@
 import { User } from "../interfaces/user"
 import { Register } from "../pageObjects/register"
+import { Login } from "../pageObjects/login"
+import { getRandomNumber} from "../utils/helpers"
 
 const register = new Register()
+const login = new Login()
 
 const user: User = {
     firstName: 'Mihai',
@@ -13,6 +16,7 @@ const user: User = {
     phoneNumber: '07412345',
     socialSecurityNumber: "131313",
     username: 'Mihai13',
+    randomUsername: '',
     password: '1234'
   }
 
@@ -42,11 +46,6 @@ const user: User = {
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-//Set Data Accesss Mode to JDBC
-Cypress.Commands.add('dataAccessMode', () => {
-
-})
-
 //Command to register user
 Cypress.Commands.add('registerUser', () => {
 
@@ -65,13 +64,43 @@ Cypress.Commands.add('registerUser', () => {
     register.submitRegistrationForm()
 })
 
+Cypress.Commands.add('registerRandomUser', () => {
+
+    user.randomUsername = user.username + getRandomNumber(1, 300).toString()
+
+    register.getFirstName().type(user.firstName)
+    register.getLastName().type(user.lastName)
+    register.getAddress().type(user.address)
+    register.getCity().type(user.city)
+    register.getState().type(user.state)
+    register.getZipCode().type(user.zipCode)
+    register.getPhone().type(user.phoneNumber)
+    register.getSsn().type(user.socialSecurityNumber)
+    register.getUsername().type(user.randomUsername ) 
+    register.getPassword().type(user.password)
+    register.getConfirmPassword().type(user.password)
+
+    register.submitRegistrationForm()
+
+    cy.wrap(user)
+
+})
+
+Cypress.Commands.add('loginUser', (username: string, password: string) => {
+
+    login.getUsername().type(username)
+    login.getPassword().type(password)
+    login.clickLoginButton()
+})
+
 export{}
 
 declare global{
     namespace Cypress{
         interface Chainable{
-            registerUser(): Chainable<void>
-            dataAccessMode(): Chainable<void>
+            registerUser(): Chainable<User>
+            loginUser(username: string, password: string): Chainable<void>
+            registerRandomUser(): Chainable<User>
         }
     }
 }

@@ -6,15 +6,15 @@ const register = new Register()
 const admin = new Admin()
 
 before('', () => {
-})
-
-beforeEach('', () => {
-  
+    
   cy.visit('index.htm')
   //Set Data Access Mode to JDBC(Default Data Access Mode)
   admin.clickAdminPage()
   admin.getJDBCOption().check()
+  admin.clickSubmitButton()
+})
 
+beforeEach('', () => {
 })
 
 after('', () =>{
