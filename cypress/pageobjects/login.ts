@@ -7,6 +7,9 @@ loginButton = "input[value='Log In']"
 loginSuccessfull = ".smallText"
 logoutButton = '#leftPanel > ul > :nth-child(8) > a'
 
+// error
+loginError = '.error'
+
 
 //Login functions
 
@@ -28,6 +31,10 @@ clickLogoutButton(){
 
 getloginSuccessfullMsg(){
     return cy.get(this.loginSuccessfull)
+}
+
+getLoginErrorMsg(){
+    return cy.get(this.loginError)
 }
 
 }
