@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "cypress": "^13.14.0"
+    "cypress": "^13.14.0",
+    "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",

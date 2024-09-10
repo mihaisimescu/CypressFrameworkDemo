@@ -5,6 +5,7 @@ username = "input[name='username']"
 password = "input[name='password']"
 loginButton = "input[value='Log In']"
 loginSuccessfull = ".smallText"
+logoutButton = '#leftPanel > ul > :nth-child(8) > a'
 
 
 //Login functions
@@ -19,6 +20,14 @@ getPassword(){
 
 clickLoginButton(){
     return cy.get(this.loginButton).click()
+}
+
+clickLogoutButton(){
+    return cy.get(this.logoutButton).click()
+}
+
+getloginSuccessfullMsg(){
+    return cy.get(this.loginSuccessfull)
 }
 
 }
