@@ -14,12 +14,23 @@ export class Register {
     password = '#customer\\.password'
     confirmPassword = '#repeatedPassword'
     submitRegistration = '[colspan="2"] > .button' //input[value='Register']
-     //Register success check
+    
+    //Register success check
     registerSuccessfull = "#rightPanel > p"
 
+    //Register form error messages for required fields
+    errorFirstName = '#customer\\.firstName\\.errors'
+    errorLastName = '#customer\\.lastName\\.errors'
+    errorAddress = '#customer\\.address\\.street\\.errors'
+    errorCity = '#customer\\.address\\.city\\.errors'
+    errorState = '#customer\\.address\\.state\\.errors'
+    errorZipCode = '#customer\\.address\\.zipCode\\.errors'
+    errorSsn = '#customer\\.ssn\\.errors'
+    errorUsername = '#customer\\.username\\.errors'
+    errorPassword = '#customer\\.password\\.errors'
+    errorConfirmPassword = '#repeatedPassword\\.errors'
 
     //Functions
-
     getFirstName(){
         return cy.get(this.firstName)
     }
@@ -76,6 +87,29 @@ export class Register {
 
     getWelcomeMsg(){
         return cy.get(this.registerSuccessfull)
+    }
+
+    checkMandatoryFieldsErrorMsg(){
+        cy.get(this.errorFirstName)
+            .should('be.visible')
+        cy.get(this.errorLastName)
+            .should('be.visible')
+        cy.get(this.errorAddress)
+            .should('be.visible')
+        cy.get(this.errorCity)
+            .should('be.visible')
+        cy.get(this.errorState)
+            .should('be.visible')
+        cy.get(this.errorZipCode)
+            .should('be.visible')
+        cy.get(this.errorSsn)
+            .should('be.visible')
+        cy.get(this.errorUsername)
+            .should('be.visible')
+        cy.get(this.errorPassword)
+            .should('be.visible')
+        cy.get(this.errorConfirmPassword)
+            .should('be.visible')
     }
 
 }
