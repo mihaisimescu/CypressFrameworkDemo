@@ -2,9 +2,13 @@ import { User } from "../interfaces/user"
 import { Register } from "../pageObjects/register"
 import { Login } from "../pageObjects/login"
 import { getRandomNumber} from "../utils/helpers"
+import { OpenNewAccount } from "../pageObjects/openNewAccount"
+import { eq } from "cypress/types/lodash"
+import { Account } from "../interfaces/account"
 
 const register = new Register()
 const login = new Login()
+const newAccount = new OpenNewAccount()
 
 const user: User = {
     firstName: 'Mihai',
@@ -93,6 +97,28 @@ Cypress.Commands.add('loginUser', (username: string, password: string) => {
     login.clickLoginButton()
 })
 
+Cypress.Commands.add('openNewAccount', (accountType: string, accountId: any) => {
+    
+    newAccount.getAccountType().select(accountType)
+    newAccount.getFromAccount().select(accountId)
+    newAccount.clickSubmitOpenNewAccount()
+
+})
+
+Cypress.Commands.add('getDefaultAccount', () => { 
+    return cy.get('tbody')
+            .find('tr')
+            .eq(0).then(($row) => {
+                const account: Account = {
+                    accountId : $row.find('td').eq(0).text().toString(),
+                    accountBalance : $row.find('td').eq(1).text().replace("$", ""),
+                    accountAvailbleAmount : $row.find('td').eq(2).text() 
+      }; 
+          return account;     
+    })     
+
+})
+
 export{}
 
 declare global{
@@ -101,6 +127,8 @@ declare global{
             registerUser(): Chainable<User>
             loginUser(username: string, password: string): Chainable<void>
             registerRandomUser(): Chainable<User>
+            openNewAccount(accountType: string, accountId: any): Chainable<void>
+            getDefaultAccount(): Chainable<Account>
         }
     }
 }
