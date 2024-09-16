@@ -3,12 +3,12 @@ import { Register } from "../pageObjects/register"
 import { Login } from "../pageObjects/login"
 import { getRandomNumber} from "../utils/helpers"
 import { OpenNewAccount } from "../pageObjects/openNewAccount"
-import { eq } from "cypress/types/lodash"
-import { Account } from "../interfaces/account"
+import { TransferFunds } from "../pageObjects/transferFunds"
 
 const register = new Register()
 const login = new Login()
 const newAccount = new OpenNewAccount()
+const transferFunds = new TransferFunds()
 
 const user: User = {
     firstName: 'Mihai',
@@ -95,9 +95,10 @@ Cypress.Commands.add('loginUser', (username: string, password: string) => {
     login.getUsername().type(username)
     login.getPassword().type(password)
     login.clickLoginButton()
+
 })
 
-Cypress.Commands.add('openNewAccount', (accountType: string, accountId: any) => {
+Cypress.Commands.add('openNewAccount', (accountType: string, accountId: string) => {
     
     newAccount.getAccountType().select(accountType)
     newAccount.getFromAccount().select(accountId)
@@ -105,18 +106,10 @@ Cypress.Commands.add('openNewAccount', (accountType: string, accountId: any) => 
 
 })
 
-Cypress.Commands.add('getDefaultAccount', () => { 
-    return cy.get('tbody')
-            .find('tr')
-            .eq(0).then(($row) => {
-                const account: Account = {
-                    accountId : $row.find('td').eq(0).text().toString(),
-                    accountBalance : $row.find('td').eq(1).text().replace("$", ""),
-                    accountAvailbleAmount : $row.find('td').eq(2).text() 
-      }; 
-          return account;     
-    })     
+Cypress.Commands.add('transferBetweenAccounts', (fromAccount:string, toAccount: string) =>{
 
+    transferFunds.getFromAccountId().select(fromAccount)
+    transferFunds.getToAccountId().select(toAccount)
 })
 
 export{}
@@ -127,8 +120,8 @@ declare global{
             registerUser(): Chainable<User>
             loginUser(username: string, password: string): Chainable<void>
             registerRandomUser(): Chainable<User>
-            openNewAccount(accountType: string, accountId: any): Chainable<void>
-            getDefaultAccount(): Chainable<Account>
+            openNewAccount(accountType: string, accountId: string): Chainable<void>
+            transferBetweenAccounts(fromAccount:string, toAccount: string): Chainable<void>
         }
     }
 }

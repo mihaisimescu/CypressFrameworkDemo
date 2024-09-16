@@ -12,7 +12,6 @@ loginError = '.error'
 
 
 //Login functions
-
 getUsername(){
     return cy.get(this.username)
 }
@@ -34,6 +33,10 @@ getloginSuccessfullMsg(){
 }
 
 getLoginErrorMsg(){
+    return cy.get(this.loginError)
+}
+
+getLoginError(){
     return cy.get(this.loginError)
 }
 
