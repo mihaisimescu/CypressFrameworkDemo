@@ -3,7 +3,10 @@ import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import createEsbuildPlugin from "@badeball/cypress-cucumber-preprocessor/esbuild";
 
-module.exports = defineConfig({
+export default defineConfig({
+
+reporter: "cypress-mochawesome-reporter",
+
   e2e: {
 
     baseUrl: 'https://parabank.parasoft.com/parabank/',
@@ -16,7 +19,8 @@ module.exports = defineConfig({
       async setupNodeEvents(cypressOn, config) {
 
       const on = require('cypress-on-fix')(cypressOn)
-      // implement node event listeners here
+      require('cypress-mochawesome-reporter/plugin')(on);
+      
       await addCucumberPreprocessorPlugin(on, config)
 
       on('file:preprocessor',
