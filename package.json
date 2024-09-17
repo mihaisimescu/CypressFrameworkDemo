@@ -3,10 +3,12 @@
     "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
     "cypress": "^13.14.0",
+    "cypress-log-filter": "^1.0.5",
     "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
+    "cypress-on-fix": "^1.0.3",
     "typescript": "^5.5.4"
   }
 }

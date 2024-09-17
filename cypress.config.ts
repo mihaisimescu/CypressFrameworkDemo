@@ -13,8 +13,9 @@ module.exports = defineConfig({
       logLevel: "VERBOSE",
     },
     
-    async setupNodeEvents(on, config) {
+      async setupNodeEvents(cypressOn, config) {
 
+      const on = require('cypress-on-fix')(cypressOn)
       // implement node event listeners here
       await addCucumberPreprocessorPlugin(on, config)
 
