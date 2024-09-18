@@ -8,6 +8,7 @@ export class TransferFunds{
     submitTransfer = ':nth-child(4) > .button'
     newAccountId = '#newAccountId'
 
+    //
     transferSuccess = '#showResult > .title'
 
     clickSubmitButton(){
@@ -30,5 +31,4 @@ export class TransferFunds{
     getTransferSuccessMsg(){
         return cy.get(this.transferSuccess)
     }
-
 }

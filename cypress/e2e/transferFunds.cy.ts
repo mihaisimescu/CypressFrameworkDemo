@@ -5,6 +5,7 @@ import { Account } from "../interfaces/account"
 import { OpenNewAccount } from "../pageObjects/openNewAccount"
 import { TransferFunds } from "../pageObjects/transferFunds"
 import { Overview } from "../pageObjects/overview"
+import { over } from "cypress/types/lodash"
 
 
 const admin = new Admin()
@@ -17,6 +18,7 @@ let loginUser: User
 let defaultAccount: Account
 let savingsAccount: Account
 let newAccountId: string
+let transferAmount = '100'
 
 before('', () => {
 
@@ -25,8 +27,6 @@ before('', () => {
   admin.clickAdminPage()
   admin.getJDBCOption().check()
   admin.clickSubmitButton()
-
-
 })
 
 beforeEach('', () => {
@@ -43,7 +43,7 @@ beforeEach('', () => {
 
   cy.intercept('GET', '**/parabank/services_proxy/bank/customers/**').as('account')
   cy.intercept('GET', '**/parabank/openaccount.htm').as('openAccount')
-  cy.intercept('GET', '**parabank/transfer.htm').as('transfers')
+  cy.intercept('GET', '**parabank/transfer.htm').as('transfer')
 })
 
 describe('Transfer funds test', () => {
@@ -59,7 +59,7 @@ describe('Transfer funds test', () => {
         .should('be.visible')
         .and('have.text', 'Welcome ' + loginUser.firstName + ' ' + loginUser.lastName)
 
-    
+
       // Store default account data
       cy.get('tbody')
         .find('tr')
@@ -95,21 +95,34 @@ describe('Transfer funds test', () => {
           //Go to transfer funds page  
           overview.clickTransferFundsPage()
 
-          cy.wait('@transfers').then(() => {
+          //Enter amount to transfer and select accounts
+          transferFunds.enterTransferAmount().type(transferAmount)
 
-            //Enter amount to transfer and select accounts
-            transferFunds.enterTransferAmount().type('100')
+          cy.transferBetweenAccounts(defaultAccount.accountId, newAccountId)
 
-            cy.transferBetweenAccounts(defaultAccount.accountId, newAccountId)
+          transferFunds.clickSubmitButton()
 
-            transferFunds.clickSubmitButton()
+          //Check if the transfer is complete
+          transferFunds.getTransferSuccessMsg()
+            .should('be.visible')
+            .and('have.text', 'Transfer Complete!').then(()=>{
+              
+              //Check if amount and accounts match
+              cy.get('#amountResult').then(($element)=>{
+                expect($element.text().replace('$', '').replace('.00', '')).to.equal(transferAmount)
+              })
 
-            //Check if the transfer is complete
-            transferFunds.getTransferSuccessMsg()
-              .should('be.visible')
-              .and('have.text', 'Transfer Complete!')
-          })
+              cy.get('#fromAccountIdResult').then(($element)=>{
+                expect($element.text()).to.equal(defaultAccount.accountId)
+              })
+
+              cy.get('#toAccountIdResult').then(($element)=>{
+                expect($element.text()).to.equal(newAccountId)
+              })
+
+
+            })
         })
+      })
     })
   })
-})
