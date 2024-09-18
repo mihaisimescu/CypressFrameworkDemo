@@ -1,7 +1,6 @@
 export class TransferFunds{
 
     //locators
-    transferFundsLink = '#leftPanel > ul > :nth-child(3) > a'
     transferFundsTitle = '#showForm > .title'
     transferAmount = '#amount'
     fromAccountId = '#fromAccountId'
@@ -9,12 +8,8 @@ export class TransferFunds{
     submitTransfer = ':nth-child(4) > .button'
     newAccountId = '#newAccountId'
 
+    //
     transferSuccess = '#showResult > .title'
-
-
-    clickTransferFundsPage(){
-        cy.get(this.transferFundsLink).click()
-    }
 
     clickSubmitButton(){
         cy.get(this.submitTransfer).click()
@@ -36,5 +31,4 @@ export class TransferFunds{
     getTransferSuccessMsg(){
         return cy.get(this.transferSuccess)
     }
-
 }

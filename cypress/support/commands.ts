@@ -70,7 +70,7 @@ Cypress.Commands.add('registerUser', () => {
 
 Cypress.Commands.add('registerRandomUser', () => {
 
-    user.randomUsername = user.username + getRandomNumber(1, 300).toString()
+    user.randomUsername = user.username + getRandomNumber(1, 1000).toString()
 
     register.getFirstName().type(user.firstName)
     register.getLastName().type(user.lastName)
@@ -98,7 +98,7 @@ Cypress.Commands.add('loginUser', (username: string, password: string) => {
 
 })
 
-Cypress.Commands.add('openNewAccount', (accountType: string, accountId: string) => {
+Cypress.Commands.add('openNewAccount', (accountType: string, accountId: any) => {
     
     newAccount.getAccountType().select(accountType)
     newAccount.getFromAccount().select(accountId)
@@ -120,7 +120,7 @@ declare global{
             registerUser(): Chainable<User>
             loginUser(username: string, password: string): Chainable<void>
             registerRandomUser(): Chainable<User>
-            openNewAccount(accountType: string, accountId: string): Chainable<void>
+            openNewAccount(accountType: string, accountId: any): Chainable<void>
             transferBetweenAccounts(fromAccount:string, toAccount: string): Chainable<void>
         }
     }

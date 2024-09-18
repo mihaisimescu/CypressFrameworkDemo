@@ -2,13 +2,18 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
+    "@types/node": "^22.5.5",
+    "@types/pg": "^8.11.10",
     "cypress": "^13.14.0",
     "cypress-log-filter": "^1.0.5",
     "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
+    "cypress-mochawesome-reporter": "^3.8.2",
     "cypress-on-fix": "^1.0.3",
+    "mocha": "^10.7.3",
+    "mochawesome": "^7.1.3",
     "typescript": "^5.5.4"
   }
 }

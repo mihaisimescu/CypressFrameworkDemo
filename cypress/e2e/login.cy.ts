@@ -17,26 +17,23 @@ before('', () => {
   admin.getJDBCOption().check()
   admin.clickSubmitButton()
 
+
+})
+
+beforeEach('', () => {
   //Register a user first
   cy.visit('register.htm')
   cy.registerRandomUser().then(user =>{
         loginUser = user
+        //Logout after registration
+        login.clickLogoutButton()
     })
 
-  //Logout after registration
-  login.clickLogoutButton()
 
   // Go back to main page
   cy.visit('index.htm')
 })
 
-beforeEach('', () => {
-    
-})
-
-afterEach('', () =>{
-    
-})
 
 describe('Login test', () => {
 
@@ -60,7 +57,7 @@ describe('Login test', () => {
 
         cy.url().should('include', 'index.htm')
 
-        cy.loginUser(loginUser.username, loginUser.password)
+        cy.loginUser("Dorin", "Ionescu")
 
         login.getLoginErrorMsg()
             .should('be.visible')

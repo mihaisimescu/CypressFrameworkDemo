@@ -1,7 +1,6 @@
 export class OpenNewAccount{
 
     //Locators
-    openNewAccountLink = '#leftPanel > ul > :nth-child(1) > a'
     openNewAccountTitle = '#openAccountForm > .title'
     accountType = '#type'
     fromAccount = '#fromAccountId'
@@ -9,11 +8,6 @@ export class OpenNewAccount{
 
     newAccountOpenedMsg = '#openAccountResult > .title'
     newAccountNumber = '#newAccountId'
-
-    clickOpenNewAccountLink(){
-        cy.get(this.openNewAccountLink).click()
-        return this
-    }
 
     getOpenNewAccountTitle(){
         return cy.get(this.openNewAccountTitle)
