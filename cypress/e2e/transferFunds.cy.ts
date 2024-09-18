@@ -4,12 +4,14 @@ import { User } from "../interfaces/user"
 import { Account } from "../interfaces/account"
 import { OpenNewAccount } from "../pageObjects/openNewAccount"
 import { TransferFunds } from "../pageObjects/transferFunds"
+import { Overview } from "../pageObjects/overview"
 
 
 const admin = new Admin()
 const login = new Login()
 const newAccount = new OpenNewAccount()
 const transferFunds = new TransferFunds()
+const overview = new Overview()
 
 let loginUser: User
 let defaultAccount: Account
@@ -39,7 +41,6 @@ beforeEach('', () => {
   // Go back to main page
   cy.visit('index.htm')
 
-  cy.intercept('GET', '**/parabank/overview.htm').as('overview')
   cy.intercept('GET', '**/parabank/services_proxy/bank/customers/**').as('account')
   cy.intercept('GET', '**/parabank/openaccount.htm').as('openAccount')
   cy.intercept('GET', '**parabank/transfer.htm').as('transfers')
@@ -58,8 +59,7 @@ describe('Transfer funds test', () => {
         .should('be.visible')
         .and('have.text', 'Welcome ' + loginUser.firstName + ' ' + loginUser.lastName)
 
-      cy.wait('@overview')
-      
+    
       // Store default account data
       cy.get('tbody')
         .find('tr')
@@ -71,7 +71,7 @@ describe('Transfer funds test', () => {
           }
 
         }).then(() => {
-          newAccount.clickOpenNewAccountLink()
+          overview.clickOpenNewAccountLink()
 
           cy.wait('@openAccount').then(() => {
 
@@ -93,16 +93,18 @@ describe('Transfer funds test', () => {
         }).then(() => {
 
           //Go to transfer funds page  
-          transferFunds.clickTransferFundsPage()
+          overview.clickTransferFundsPage()
 
           cy.wait('@transfers').then(() => {
 
+            //Enter amount to transfer and select accounts
             transferFunds.enterTransferAmount().type('100')
 
             cy.transferBetweenAccounts(defaultAccount.accountId, newAccountId)
 
             transferFunds.clickSubmitButton()
 
+            //Check if the transfer is complete
             transferFunds.getTransferSuccessMsg()
               .should('be.visible')
               .and('have.text', 'Transfer Complete!')

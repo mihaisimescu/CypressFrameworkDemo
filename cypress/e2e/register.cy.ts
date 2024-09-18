@@ -13,12 +13,6 @@ before('', () => {
   admin.clickSubmitButton()
 })
 
-beforeEach('', () => {
-})
-
-after('', () =>{
-})
-
 describe('Register Tests', () => {
   
   it('Check register functionality with valid data', () => {
@@ -30,7 +24,7 @@ describe('Register Tests', () => {
     cy.url().should('include', 'register.htm')
 
     //Register user
-    cy.registerUser().then( user => {
+    cy.registerRandomUser().then( user => {
 
       //Check if registration was successfull
       register.getWelcomeMsg()

@@ -15,7 +15,6 @@ amount = ':nth-child(11) > [width="20%"] > .input'
 fromAccount = ':nth-child(13) > :nth-child(2) > .input'
 sendPayementButton = ':nth-child(14) > :nth-child(2) > .button'
 
-billPayPage = '#leftPanel > ul > :nth-child(4) > a'
 billPayFormTitle = '#billpayForm > .title'
 billPayementSuccessfull = '#billpayResult > .title'
 
@@ -52,11 +51,6 @@ fillBillPayement(){
 
 submitPayement(){
     cy.get(this.sendPayementButton).click()
-    return this
-}
-
-clickBillPayPage(){
-    cy.get(this.billPayPage).click()
     return this
 }
 
